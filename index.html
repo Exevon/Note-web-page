@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <title>Notes</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Take your notes!</h1>
+    </header>
+
+    <div class="content">
+        <div class="sidebar">
+            <h3>Your notes</h3>
+            <ul class="note-list">
+                <li onclick="chooseNote(this)" class="note">Welcome</li>
+                <li onclick="addNew()" class="note" id="add-new"><img width="30" src="sources/icons8-plus-48.svg"></img><span>Add new</span></li>
+            </ul>
+        </div>
+        <div class="container">
+            <div class="note-window">
+                <button onclick="saveText()" class="save-btn">SAVE</button>
+                <h2>Welcome</h2>
+                <p onclick="swapToTextArea()" class="note-content">Welcome to my note taking web page!</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
