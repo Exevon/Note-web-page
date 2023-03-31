@@ -2,8 +2,11 @@
 
 // Hashmap that will store contents of all notes
 let notesContents = new Map();
-notesContents.set("Welcome", "This is welcome-note. Hope you will enjoy!");
+notesContents.set("Welcome", "Welcome to my note taking web page!");
 let currentNote = "Welcome";
+
+// Flag to see if some note is currently being changed
+let isNoteChanging = false;
 
 // Loads content of note
 function loadNoteContent(note) {
@@ -23,6 +26,12 @@ function loadNoteContent(note) {
 
 // Sets current note
 function chooseNote(note) {
+    // If currently changing another note
+    if (isNoteChanging) {
+        highlightSaveBtn();
+        return;
+    }
+
     currentNote = note.innerText;
     // loading note content
     loadNoteContent(note.innerText);
@@ -60,6 +69,12 @@ function addNewNote(title) {
 
 // Creates input field to enter title of note
 function addNew() {
+    // If currently changing another note
+    if (isNoteChanging) {
+        highlightSaveBtn();
+        return;
+    }
+
     // Removing target element
     let addNewBtn = document.getElementById("add-new");
     addNewBtn.style.padding = "5px";
@@ -86,6 +101,9 @@ function addNew() {
 
 // Saves content from textarea to new p block
 function saveText() {
+    // Note is not changing anymore
+    isNoteChanging = false;
+
     // Getting textarea content
     const textarea = document.getElementsByClassName("editor")[0];
     let content = textarea.value;
@@ -125,6 +143,9 @@ function resizeTextArea(textarea) {
 
 // Replaces p block with textarea
 function swapToTextArea() {
+    // Note is being changed right now
+    isNoteChanging = true;
+
     const block = document.getElementsByClassName("note-content")[0];
     const blockContent = block.innerText;
     // Creating textarea
@@ -145,3 +166,10 @@ function swapToTextArea() {
 }
 
 
+// Highlighting save bytton
+function highlightSaveBtn() {
+    let saveBtn = document.getElementsByClassName("save-btn")[0];
+    saveBtn.classList.add("highlighted");
+
+    setTimeout(() => saveBtn.classList.remove("highlighted"), 1000);
+}
