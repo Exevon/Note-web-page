@@ -12,9 +12,9 @@ Wanted to make something interesting using JavaScript so i decided to make an ap
 It's intuitively clear as for me. You can add new note using "Add new" option, edit text in the note window and save it.
 
 ## Fixes needed
-1. Sidebar's height changes as height of note window increases.
-2. While editing note and clicking to another, text from current note duplicates to this note.
+1. [x] Sidebar's height changes as height of note window increases.
+2. [x] While editing note and clicking to another, text from current note duplicates to this note.
 
 ## To add
-1. Make app responsive to mobile devices.
-2. Ability to delete existing note.
+1. [ ] Make app responsive to mobile devices.
+2. [ ] Ability to delete existing note.
