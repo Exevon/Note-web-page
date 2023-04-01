@@ -17,4 +17,4 @@ It's intuitively clear as for me. You can add new note using "Add new" option, e
 
 ## To add
 1. [ ] Make app responsive to mobile devices.
-2. [ ] Ability to delete existing note.
+2. [x] Ability to delete existing note.

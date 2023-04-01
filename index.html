@@ -21,15 +21,17 @@
             <h3>Your notes</h3>
             <ul class="note-list">
                 <li onclick="chooseNote(this)" class="note">Welcome</li>
-                <li onclick="addNew()" class="note" id="add-new"><img width="30" src="sources/icons8-plus-48.svg"></img><span>Add new</span></li>
+                <li onclick="addNew()" class="note" id="add-new"><img width="30" src="sources/plus-icon.svg"></img><span>Add new</span></li>
             </ul>
         </div>
         <div class="container">
             <div class="note-window">
-                <button onclick="saveText()" class="save-btn">SAVE</button>
+                <button onclick="deleteNote()" class="btn delete-note-btn"><img width="25" src="sources/trash-can-icon.svg"></button>
+                <button onclick="saveText()" class="btn save-btn">SAVE</button>
                 <h2>Welcome</h2>
                 <p onclick="swapToTextArea()" class="note-content">Welcome to my note taking web page!</p>
             </div>
+            <h2 class="emptyNoteText">You don't have notes</h2>
         </div>
     </div>
 

@@ -12,13 +12,13 @@ let isNoteChanging = false;
 function loadNoteContent(note) {
     // Getting title and content elements
     let noteWindow = document.getElementsByClassName("note-window")[0];
+    noteWindow.style.opacity = 1;
     let title = noteWindow.getElementsByTagName("h2")[0];
     let content = noteWindow.getElementsByClassName("note-content")[0];
 
     // Changing title and content
     title.innerText = note;
-    if (notesContents.has(note)) content.innerText = notesContents.get(note);
-    else content.innerText = "Type your text here";
+    content.innerText = notesContents.get(note);
     // Resizing height of note window
     noteWindow.style.height = content.offsetHeight + 84 + "px";
 }
@@ -45,7 +45,7 @@ function createAddBnt() {
     newAddBtn.setAttribute("id", "add-new");
     newAddBtn.setAttribute("onclick", "addNew()");
     newAddBtn.classList.add("note");
-    newAddBtn.innerHTML = '<img width="30" src="sources/icons8-plus-48.svg"></img><span>Add new</span>';
+    newAddBtn.innerHTML = '<img width="30" src="sources/plus-icon.svg"></img><span>Add new</span>';
     const noteList = document.getElementsByClassName("note-list")[0];
     noteList.append(newAddBtn);
 }
@@ -63,6 +63,7 @@ function addNewNote(title) {
     document.getElementById("add-new").remove();
     // Adding new note
     noteList.append(newNote);
+    notesContents.set(title, "Type your text here");
     createAddBnt();
 }
 
@@ -172,4 +173,33 @@ function highlightSaveBtn() {
     saveBtn.classList.add("highlighted");
 
     setTimeout(() => saveBtn.classList.remove("highlighted"), 1000);
+}
+
+
+// Deleting current note
+function deleteNote() {
+    if (!confirm("Are you sure?")) {
+        return;
+    }
+
+    // If there is only one note
+    if (notesContents.size <= 1) {
+        let noteWindow = document.getElementsByClassName("note-window")[0];
+        noteWindow.style.opacity = 0;
+        document.getElementsByClassName("note")[0].remove();
+        return;
+    }
+
+    // Deleting note from hashmap
+    notesContents.delete(currentNote);
+    
+    // Removing note from sidebar
+    for (let note of document.getElementsByClassName("note")) {
+        if (note.innerText == currentNote) {
+            note.remove();
+        }
+    }
+
+    // choosing first note
+    chooseNote(document.getElementsByClassName("note")[0]);
 }
