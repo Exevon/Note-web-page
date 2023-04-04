@@ -1,12 +1,46 @@
 "use strict"
 
-// Hashmap that will store contents of all notes
-let notesContents = new Map();
-notesContents.set("Welcome", "Welcome to my note taking web page!");
-let currentNote = "Welcome";
-
+// Total amount of notes and current note
+let amountOfNotes = 0;
+let currentNote = null;
 // Flag to see if some note is currently being changed
 let isNoteChanging = false;
+
+
+document.addEventListener("DOMContentLoaded", loadContents);
+// Loads all notes from localStorage
+function loadContents() {
+    const keys = Object.keys(localStorage);
+    // If the localStorage is empty
+    if (keys.length == 0) {
+        currentNote = "Welcome";
+        addNewNote("Welcome");
+        localStorage.setItem(currentNote, "Welcome to my note taking web page!");
+        return;
+    }
+    
+    // Loading content of the first note and setting is as a current
+    loadNoteContent(keys[0]);
+    currentNote = keys[0];
+    // Adding the rest of notes and loading content
+    for (let key of keys) {
+        addNewNote(key, localStorage.getItem(key));
+    }
+}
+
+
+// Sets current note
+function chooseNote(note) {
+    // If currently changing another note
+    if (isNoteChanging) {
+        highlightSaveBtn();
+        return;
+    }
+    currentNote = note.innerText;
+    // loading note content
+    loadNoteContent(note.innerText);
+}
+
 
 // Loads content of note
 function loadNoteContent(note) {
@@ -18,23 +52,9 @@ function loadNoteContent(note) {
 
     // Changing title and content
     title.innerText = note;
-    content.innerText = notesContents.get(note);
+    content.innerText = localStorage.getItem(note);
     // Resizing height of note window
     noteWindow.style.height = content.offsetHeight + 84 + "px";
-}
-
-
-// Sets current note
-function chooseNote(note) {
-    // If currently changing another note
-    if (isNoteChanging) {
-        highlightSaveBtn();
-        return;
-    }
-
-    currentNote = note.innerText;
-    // loading note content
-    loadNoteContent(note.innerText);
 }
 
 
@@ -52,7 +72,7 @@ function createAddBnt() {
 
 
 // Creates new note
-function addNewNote(title) {
+function addNewNote(title, content) {
     // Creating new note element
     let newNote = document.createElement("li");
     newNote.classList.add("note");
@@ -63,7 +83,8 @@ function addNewNote(title) {
     document.getElementById("add-new").remove();
     // Adding new note
     noteList.append(newNote);
-    notesContents.set(title, "Type your text here");
+    localStorage.setItem(title, content ? content : "Type your text here");
+    amountOfNotes++;
     createAddBnt();
 }
 
@@ -89,7 +110,11 @@ function addNew() {
     inputTitle.addEventListener("keydown", function(event){
         if (event.code == "Enter" && inputTitle.value.trim()) {
             inputTitle.onblur = false;
-            addNewNote(inputTitle.value);
+            if (!Object.keys(localStorage).includes(inputTitle.value)) {
+                addNewNote(inputTitle.value);
+            } else {
+                alert(`Note "${inputTitle.value}" already exists`);
+            }
         }
     });
     
@@ -123,7 +148,7 @@ function saveText() {
 
     let currentNoteName = noteWindow.getElementsByTagName("h2")[0].innerHTML;
     // Saving current content
-    notesContents.set(currentNoteName, content);
+    localStorage.setItem(currentNoteName, content);
 }
 
 
@@ -152,7 +177,6 @@ function swapToTextArea() {
     // Creating textarea
     let textarea = document.createElement("textarea");
     textarea.value = blockContent;
-    // textarea.setAttribute("onblur", "swapToBlock");
     textarea.classList.add("editor");
 
     // Resizing textarea and updating sidebar height
@@ -171,7 +195,6 @@ function swapToTextArea() {
 function highlightSaveBtn() {
     let saveBtn = document.getElementsByClassName("save-btn")[0];
     saveBtn.classList.add("highlighted");
-
     setTimeout(() => saveBtn.classList.remove("highlighted"), 1000);
 }
 
@@ -181,25 +204,25 @@ function deleteNote() {
     if (!confirm("Are you sure?")) {
         return;
     }
-
+    
     // If there is only one note
-    if (notesContents.size <= 1) {
+    if (amountOfNotes <= 1) {
         let noteWindow = document.getElementsByClassName("note-window")[0];
         noteWindow.style.opacity = 0;
         document.getElementsByClassName("note")[0].remove();
+        localStorage.removeItem(currentNote);
         return;
     }
-
-    // Deleting note from hashmap
-    notesContents.delete(currentNote);
     
+    // Deleting note from localStorage
+    localStorage.removeItem(currentNote);
+    amountOfNotes--;
     // Removing note from sidebar
     for (let note of document.getElementsByClassName("note")) {
         if (note.innerText == currentNote) {
             note.remove();
         }
     }
-
     // choosing first note
     chooseNote(document.getElementsByClassName("note")[0]);
 }

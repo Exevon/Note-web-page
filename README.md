@@ -1,7 +1,7 @@
 # Note-web-page
 Web page for taking your notes
 
-Wanted to make something interesting using JavaScript so i decided to make an app for taking notes. But i can't make a backend for now, so it's not an all but just a web page. Unfortunately everything disapears as soon as you reload the page.
+Wanted to make something interesting using JavaScript so i decided to make a web page for taking notes. All data i stored in local storage so everything disapears whet you clean you browser cache.
 
 ## Used technologies
 * HTML
