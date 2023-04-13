@@ -14,7 +14,7 @@ function loadContents() {
     // If the localStorage is empty
     if (keys.length == 0) {
         currentNote = "Welcome";
-        addNewNote("Welcome");
+        addNewNote("Welcome", null);
         localStorage.setItem(currentNote, "Welcome to my note taking web page!");
         return;
     }
@@ -39,6 +39,8 @@ function chooseNote(note) {
     currentNote = note.innerText;
     // loading note content
     loadNoteContent(note.innerText);
+    // If sidebar has property "left" - hide menu after choosing note
+    if (document.querySelector(".sidebar").style.left) hideMenu();
 }
 
 
@@ -59,33 +61,15 @@ function loadNoteContent(note) {
 
 
 // Creates Add new button
-function createAddBnt() {
+function createAddBtn() {
     // Creating new "Add new" button
     let newAddBtn = document.createElement("li");
     newAddBtn.setAttribute("id", "add-new");
     newAddBtn.setAttribute("onclick", "addNew()");
     newAddBtn.classList.add("note");
     newAddBtn.innerHTML = '<img width="30" src="sources/plus-icon.svg"></img><span>Add new</span>';
-    const noteList = document.getElementsByClassName("note-list")[0];
+    const noteList = document.querySelector("#sideNoteList");
     noteList.append(newAddBtn);
-}
-
-
-// Creates new note
-function addNewNote(title, content) {
-    // Creating new note element
-    let newNote = document.createElement("li");
-    newNote.classList.add("note");
-    newNote.setAttribute("onclick", "chooseNote(this)");
-    newNote.innerHTML = title;
-    const noteList = document.getElementsByClassName("note-list")[0];
-    // Removing current "Add new" button
-    document.getElementById("add-new").remove();
-    // Adding new note
-    noteList.append(newNote);
-    localStorage.setItem(title, content ? content : "Type your text here");
-    amountOfNotes++;
-    createAddBnt();
 }
 
 
@@ -97,9 +81,10 @@ function addNew() {
         return;
     }
 
-    // Removing target element
+    // Styling add-new section
     let addNewBtn = document.getElementById("add-new");
     addNewBtn.style.padding = "5px";
+    // Removing content
     addNewBtn.innerHTML = "";
     // Adding input
     let inputTitle = document.createElement("input");
@@ -118,10 +103,28 @@ function addNew() {
         }
     });
     
-    inputTitle.onblur = function(event) {
-        document.getElementById("add-new").remove();
-        createAddBnt();
+    inputTitle.onblur = function() {
+        addNewBtn.remove();
+        createAddBtn();
     };
+}
+
+
+// Creates new note
+function addNewNote(title, content) {
+    // Creating new note element
+    let newNote = document.createElement("li");
+    newNote.classList.add("note");
+    newNote.setAttribute("onclick", "chooseNote(this)");
+    newNote.innerHTML = title;
+    const noteList = document.querySelector("#sideNoteList");
+    // Removing current "Add new" button
+    document.getElementById("add-new").remove();
+    // Adding new note
+    noteList.append(newNote);
+    localStorage.setItem(title, content ? content : "Type your text here");
+    amountOfNotes++;
+    createAddBtn();
 }
 
 
@@ -225,4 +228,22 @@ function deleteNote() {
     }
     // choosing first note
     chooseNote(document.getElementsByClassName("note")[0]);
+}
+
+
+// Shows side menu
+function showMenu() {
+    const sideNoteList = document.querySelector(".sidebar").style.left = "-20px";
+    document.querySelector(".shader").style.display = "block";
+}
+
+
+// Hides side menu
+function hideMenu() {
+    const sideBar = document.querySelector(".sidebar");
+    // Changing sidebar style depending on a screen width
+    if (screen.width <= 320) sideBar.style.left = "-100%";
+    else if (screen.width <= 450) sideBar.style.left = "-70%";
+    else sideBar.style.left = "-50%";
+    document.querySelector(".shader").style.display = "none"
 }

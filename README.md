@@ -16,5 +16,5 @@ It's intuitively clear as for me. You can add new note using "Add new" option, e
 2. [x] While editing note and clicking to another, text from current note duplicates to this note.
 
 ## To add
-1. [ ] Make app responsive to mobile devices.
+1. [ ] Make page adaptive to mobile devices.
 2. [x] Ability to delete existing note.

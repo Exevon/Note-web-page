@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
-    <title>Notes</title>
+    <link rel="stylesheet" href="main_.css">
+    <title>Take your notes!</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,16 +13,27 @@
 </head>
 <body>
     <header>
+        <button onclick="showMenu()" class="btn" id="menu-btn">
+            <label id="top-line" for="btn"></label>
+            <label id="middle-line" for="btn"></label>
+            <label id="bottom-line" for="btn"></label>
+        </button>
+        <div onclick="hideMenu()" class="shader"></div>
+
         <h1>Take your notes!</h1>
     </header>
 
     <div class="content">
         <div class="sidebar">
             <h3>Your notes</h3>
-            <ul class="note-list">
-                <li onclick="addNew()" class="note" id="add-new"><img width="30" src="sources/plus-icon.svg"></img><span>Add new</span></li>
+            <ul id="sideNoteList" class="note-list">
+                <li onclick="addNew()" class="note" id="add-new">
+                    <img width="30" src="sources/plus-icon.svg"></img>
+                    <span>Add new</span>
+                </li>
             </ul>
         </div>
+        
         <div class="container">
             <div class="note-window">
                 <button onclick="deleteNote()" class="btn delete-note-btn"><img width="25" src="sources/trash-can-icon.svg"></button>
@@ -33,6 +44,9 @@
             <h2 class="emptyNoteText">You don't have notes</h2>
         </div>
     </div>
+
+
+    
 
     <script src="index.js"></script>
 </body>
