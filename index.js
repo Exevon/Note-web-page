@@ -152,19 +152,24 @@ function saveText() {
     let currentNoteName = noteWindow.getElementsByTagName("h2")[0].innerHTML;
     // Saving current content
     localStorage.setItem(currentNoteName, content);
+
+    // Changing note window height
+    const noteContent = document.querySelector(".note-content");
+    noteContent.parentElement.style.height = noteContent.offsetHeight + 70 + "px";
+
 }
 
 
 // Resizes textarea
-function resizeTextArea(textarea) {
-    textarea.oninput = textarea.onfocus = function() {
-        textarea.style.height = "auto";
-        textarea.style.height = textarea.scrollHeight + "px";
-        textarea.parentElement.style.height = textarea.scrollHeight + 54 + "px";
+function resizeBlock(block) {
+    block.oninput = block.onfocus = function() {
+        block.style.height = "auto";
+        block.style.height = block.scrollHeight + "px";
+        block.parentElement.style.height = block.scrollHeight + 54 + "px";
     };
-    textarea.addEventListener("keydown", function (event) {
+    block.addEventListener("keydown", function (event) {
         if (event.code == 8 || event.code == 46) {
-          setTimeout(() => textarea.parentElement.style.height = textarea.scrollHeight + 54 + "px", 0);
+          setTimeout(() => block.parentElement.style.height = block.scrollHeight + 74 + "px", 0);
         }
     });
 }
@@ -183,7 +188,7 @@ function swapToTextArea() {
     textarea.classList.add("editor");
 
     // Resizing textarea and updating sidebar height
-    resizeTextArea(textarea);
+    resizeBlock(textarea);
 
     // Replacing block with textarea
     block.parentElement.replaceChild(textarea, block);
@@ -233,7 +238,7 @@ function deleteNote() {
 
 // Shows side menu
 function showMenu() {
-    const sideNoteList = document.querySelector(".sidebar").style.left = "-20px";
+    document.querySelector(".sidebar").style.left = "-20px";
     document.querySelector(".shader").style.display = "block";
 }
 

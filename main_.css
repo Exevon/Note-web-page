@@ -228,7 +228,7 @@ input:focus {
     border-radius: 10px;
     min-height: 500px;
     height: 500px;
-    padding: 30px 20px 10px 50px;
+    padding: 30px;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -237,12 +237,25 @@ input:focus {
 .note-window h2 {
     font-size: 24px;
     margin-bottom: 30px;
+    max-width: 85%;
 }
 
+
 .note-content {
+    font-size: 18px;
     line-height: 1.3;
     height: auto;
     width: 100%;
+}
+@media screen and (max-width: 920px) {
+    .note-content {
+        font-size: 16px;
+    }
+}
+@media screen and (max-width: 320px) {
+    .note-content {
+        font-size: 14px;
+    }
 }
 
 .btn {
@@ -253,6 +266,12 @@ input:focus {
     transition: .3s;
     cursor: pointer;
 }
+@media screen and (max-width: 720px) {
+    .btn {
+        width: 60px;
+    }
+}
+
 
 .save-btn {
     opacity: 0;
@@ -261,6 +280,12 @@ input:focus {
     color: #fff;
     border: #52e0a3 2px solid;
     font-size: 18px;
+}
+@media screen and (max-width: 720px) {
+    .save-btn {
+        width: 70px;
+        right: 90px;
+    }
 }
 
 .save-btn:hover {
@@ -291,13 +316,25 @@ input:focus {
 
 
 .editor {
+    font-family: "Roboto Mono", Arial, Helvetica, sans-serif;
     width: 100%;
     color: #fff;
     font-size: 18px;
+    line-height: 1.3;
     background-color: #444;
     border: none;
     resize: none;
     padding: 0px;
+}
+@media screen and (max-width: 920px) {
+    .editor {
+        font-size: 16px;
+    }
+}
+@media screen and (max-width: 320px) {
+    .editor {
+        font-size: 14px;
+    }
 }
 
 .editor:focus {
