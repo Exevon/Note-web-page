@@ -14,7 +14,7 @@ function loadContents() {
     // If the localStorage is empty
     if (keys.length == 0) {
         currentNote = "Welcome";
-        addNewNote("Welcome", null);
+        createNewNote("Welcome", null);
         localStorage.setItem(currentNote, "Welcome to my note taking web page!");
         return;
     }
@@ -24,7 +24,7 @@ function loadContents() {
     currentNote = keys[0];
     // Adding the rest of notes and loading content
     for (let key of keys) {
-        addNewNote(key, localStorage.getItem(key));
+        createNewNote(key, localStorage.getItem(key));
     }
 }
 
@@ -81,8 +81,10 @@ function addNew() {
         return;
     }
 
-    // Styling add-new section
     const addNewBtn = document.querySelector("#add-new");
+    // If currently inputing a title of the note
+    if ((addNewBtn).querySelector("input")) return;
+    // Styling add-new section
     addNewBtn.style.padding = "5px";
     // Removing content
     addNewBtn.innerHTML = "";
@@ -91,27 +93,36 @@ function addNew() {
     addNewBtn.append(inputTitle);
     inputTitle.placeholder = "Title";
     inputTitle.focus();
-    // Saving new note
-    inputTitle.addEventListener("keydown", function(event){
-        if (event.code == "Enter" && inputTitle.value.trim()) {
-            inputTitle.onblur = false;
-            if (!Object.keys(localStorage).includes(inputTitle.value)) {
-                addNewNote(inputTitle.value);
-            } else {
-                alert(`Note "${inputTitle.value}" already exists`);
-            }
+
+    // Adding ADD and CANCES buttons
+    document.querySelector(".note-list").innerHTML += '<div class="add-cancel-btns"><button onclick="cancelAdding()" class="btn cancelBtn">X</button><button onclick="addNote()" class="btn add-mobile">Add</button></div>';
+}
+
+
+// Canceling adding a new note
+function cancelAdding() {
+    document.querySelector("#add-new").remove();
+    createAddBtn();
+    document.querySelector(".add-cancel-btns").remove();
+}
+
+
+// Initiates creating a new note
+function addNote() {
+    const inputTitle = document.querySelector("input");
+    if (inputTitle.value.trim()) {
+        if (!Object.keys(localStorage).includes(inputTitle.value)) {
+            createNewNote(inputTitle.value);
+            cancelAdding();
+        } else {
+            alert(`Note "${inputTitle.value}" already exists`);
         }
-    });
-    
-    inputTitle.onblur = function() {
-        addNewBtn.remove();
-        createAddBtn();
-    };
+    }
 }
 
 
 // Creates new note
-function addNewNote(title, content) {
+function createNewNote(title, content) {
     // Creating new note element
     const newNote = document.createElement("li");
     newNote.classList.add("note");
