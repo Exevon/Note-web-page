@@ -47,10 +47,10 @@ function chooseNote(note) {
 // Loads content of note
 function loadNoteContent(note) {
     // Getting title and content elements
-    let noteWindow = document.getElementsByClassName("note-window")[0];
+    const noteWindow = document.querySelector(".note-window");
     noteWindow.style.opacity = 1;
-    let title = noteWindow.getElementsByTagName("h2")[0];
-    let content = noteWindow.getElementsByClassName("note-content")[0];
+    const title = noteWindow.querySelector("h2");
+    const content = noteWindow.querySelector(".note-content");
 
     // Changing title and content
     title.innerText = note;
@@ -63,7 +63,7 @@ function loadNoteContent(note) {
 // Creates Add new button
 function createAddBtn() {
     // Creating new "Add new" button
-    let newAddBtn = document.createElement("li");
+    const newAddBtn = document.createElement("li");
     newAddBtn.setAttribute("id", "add-new");
     newAddBtn.setAttribute("onclick", "addNew()");
     newAddBtn.classList.add("note");
@@ -82,12 +82,12 @@ function addNew() {
     }
 
     // Styling add-new section
-    let addNewBtn = document.getElementById("add-new");
+    const addNewBtn = document.querySelector("#add-new");
     addNewBtn.style.padding = "5px";
     // Removing content
     addNewBtn.innerHTML = "";
     // Adding input
-    let inputTitle = document.createElement("input");
+    const inputTitle = document.createElement("input");
     addNewBtn.append(inputTitle);
     inputTitle.placeholder = "Title";
     inputTitle.focus();
@@ -113,13 +113,13 @@ function addNew() {
 // Creates new note
 function addNewNote(title, content) {
     // Creating new note element
-    let newNote = document.createElement("li");
+    const newNote = document.createElement("li");
     newNote.classList.add("note");
     newNote.setAttribute("onclick", "chooseNote(this)");
     newNote.innerHTML = title;
     const noteList = document.querySelector("#sideNoteList");
     // Removing current "Add new" button
-    document.getElementById("add-new").remove();
+    document.querySelector("#add-new").remove();
     // Adding new note
     noteList.append(newNote);
     localStorage.setItem(title, content ? content : "Type your text here");
@@ -134,22 +134,22 @@ function saveText() {
     isNoteChanging = false;
 
     // Getting textarea content
-    const textarea = document.getElementsByClassName("editor")[0];
-    let content = textarea.value;
+    const textarea = document.querySelector(".editor");
+    const content = textarea.value;
 
     // Creating p with textarea content
-    let block = document.createElement("p");
+    const block = document.createElement("p");
     block.setAttribute("onclick", "swapToTextArea()");
     block.classList.add("note-content");
     block.innerText = content;
     // replacing textarea with p
-    let noteWindow = textarea.parentElement;
+    const noteWindow = textarea.parentElement;
     noteWindow.replaceChild(block, textarea);
     // Hding SAVE button
-    let saveBtn = document.getElementsByClassName("save-btn")[0];
+    const saveBtn = document.querySelector(".save-btn");
     saveBtn.style.opacity = 0;
 
-    let currentNoteName = noteWindow.getElementsByTagName("h2")[0].innerHTML;
+    const currentNoteName = noteWindow.querySelector("h2").innerHTML;
     // Saving current content
     localStorage.setItem(currentNoteName, content);
 
@@ -180,10 +180,10 @@ function swapToTextArea() {
     // Note is being changed right now
     isNoteChanging = true;
 
-    const block = document.getElementsByClassName("note-content")[0];
+    const block = document.querySelector(".note-content");
     const blockContent = block.innerText;
     // Creating textarea
-    let textarea = document.createElement("textarea");
+    const textarea = document.createElement("textarea");
     textarea.value = blockContent;
     textarea.classList.add("editor");
 
@@ -194,14 +194,14 @@ function swapToTextArea() {
     block.parentElement.replaceChild(textarea, block);
     textarea.focus();
     // Making SAVE buttin visible
-    let saveBtn = document.getElementsByClassName("save-btn")[0];
+    const saveBtn = document.querySelector(".save-btn");
     saveBtn.style.opacity = 1;
 }
 
 
 // Highlighting save bytton
 function highlightSaveBtn() {
-    let saveBtn = document.getElementsByClassName("save-btn")[0];
+    const saveBtn = document.querySelector(".save-btn");
     saveBtn.classList.add("highlighted");
     setTimeout(() => saveBtn.classList.remove("highlighted"), 1000);
 }
@@ -215,9 +215,9 @@ function deleteNote() {
     
     // If there is only one note
     if (amountOfNotes <= 1) {
-        let noteWindow = document.getElementsByClassName("note-window")[0];
+        const noteWindow = document.querySelector(".note-window");
         noteWindow.style.opacity = 0;
-        document.getElementsByClassName("note")[0].remove();
+        document.querySelector(".note").remove();
         localStorage.removeItem(currentNote);
         return;
     }
@@ -232,7 +232,7 @@ function deleteNote() {
         }
     }
     // choosing first note
-    chooseNote(document.getElementsByClassName("note")[0]);
+    chooseNote(document.querySelector(".note"));
 }
 
 

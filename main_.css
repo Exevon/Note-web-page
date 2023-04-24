@@ -325,6 +325,7 @@ input:focus {
     border: none;
     resize: none;
     padding: 0px;
+    overflow-y: hidden;
 }
 @media screen and (max-width: 920px) {
     .editor {
